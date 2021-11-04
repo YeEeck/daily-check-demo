@@ -1,7 +1,6 @@
 <template>
   <div class="calendar-y-item">
-    <div v-show="isChecked">已签到</div>
-    <div v-show="!isChecked">未签到</div>
+    <v-btn fab depressed small :color="getColor(isChecked)" style="color:#ffffff;font-weight:bold">{{ date }}</v-btn>
   </div>
 </template>
 
@@ -11,6 +10,18 @@ export default {
   props: {
     isChecked: Boolean,
     type: Number,
+    date: Number,
+  },
+  data: () => ({}),
+  mounted() {},
+  methods: {
+    getColor(isChecked) {
+      if (isChecked) {
+        return "green";
+      } else {
+        return "red";
+      }
+    },
   },
 };
 </script>
@@ -18,7 +29,10 @@ export default {
 <style>
 .calendar-y-item {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  font-size: small;
 }
 </style>
