@@ -1,12 +1,5 @@
 <template>
   <div class="home">
-    <v-app>
-      <v-app-bar color="#456268" dark app>
-        <v-app-bar-nav-icon @click="open = true"></v-app-bar-nav-icon>
-
-        <v-toolbar-title>星芒</v-toolbar-title>
-      </v-app-bar>
-      <v-main class="main">
         <v-row justify="center" class="top-bar">
           <v-col cols="6">
             <div class="text-center top-margin-medium">
@@ -40,29 +33,6 @@
         <v-row justify="center">
           <v-col cols="auto"> </v-col>
         </v-row>
-      </v-main>
-
-      <v-navigation-drawer v-model="open" absolute temporary>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title>观测中枢</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-divider></v-divider>
-
-        <v-list dense>
-          <v-list-item link v-for="item in items" :key="item.title">
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title style="font-family:">{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-    </v-app>
   </div>
 </template>
 
@@ -73,11 +43,6 @@ export default {
   data: () => ({
     buttonIcon: true,
     today: "2019-01-08",
-    open: false,
-    items: [
-      { icon: "", title: "刻印工房" },
-      { icon: "", title: "星台" },
-    ],
     events: [
       {
         name: "Weekly Meeting",
@@ -97,6 +62,10 @@ export default {
     continuous: 0,
     max: 0,
   }),
+
+  mounted(){
+    this.$router.push("/login");
+  },
 
   methods: {
     doing() {
