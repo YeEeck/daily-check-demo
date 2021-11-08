@@ -1,38 +1,41 @@
 <template>
   <div class="home">
-        <v-row justify="center" class="top-bar">
-          <v-col cols="6">
-            <div class="text-center top-margin-medium">
-              已连续签到 {{ continuous }} 天
-            </div>
-          </v-col>
-          <v-col class="text-center top-margin-medium" cols="6">
-            <div>已累计签到 {{ max }} 天</div>
-          </v-col>
-        </v-row>
-        <v-row justify="center">
-          <v-col cols="12" id="btn-col">
-            <v-btn color="#79A3B1" id="check-btn" fab dark @click="doing">
-              <v-icon
-                class="btn-img"
-                v-if="buttonIcon"
-                transition="fab-transition"
-                large
-                >mdi-check-bold</v-icon
-              >
-              <v-icon
-                class="btn-img"
-                v-if="!buttonIcon"
-                transition="fab-transition"
-                large
-                >mdi-check-decagram</v-icon
-              >
-            </v-btn>
-          </v-col>
-        </v-row>
-        <v-row justify="center">
-          <v-col cols="auto"> </v-col>
-        </v-row>
+    <v-row justify="center">
+      <v-col
+        ><div class="text-center top-margin-medium">你好, {{ username }}</div>
+      </v-col>
+    </v-row>
+    <v-row justify="center" class="top-bar">
+      <v-col cols="6">
+        <div class="text-center">已连续签到 {{ continuous }} 天</div>
+      </v-col>
+      <v-col class="text-center top-margin-medium" cols="6">
+        <div>已累计签到 {{ max }} 天</div>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="12" id="btn-col">
+        <v-btn color="#79A3B1" id="check-btn" fab dark @click="doing">
+          <v-icon
+            class="btn-img"
+            v-if="buttonIcon"
+            transition="fab-transition"
+            large
+            >mdi-check-bold</v-icon
+          >
+          <v-icon
+            class="btn-img"
+            v-if="!buttonIcon"
+            transition="fab-transition"
+            large
+            >mdi-check-decagram</v-icon
+          >
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="auto"> </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -43,28 +46,17 @@ export default {
   data: () => ({
     buttonIcon: true,
     today: "2019-01-08",
-    events: [
-      {
-        name: "Weekly Meeting",
-        start: "2019-01-07 09:00",
-        end: "2019-01-07 10:00",
-      },
-      {
-        name: `Thomas' Birthday`,
-        start: "2019-01-10",
-      },
-      {
-        name: "Mash Potatoes",
-        start: "2019-01-09 12:30",
-        end: "2019-01-09 15:30",
-      },
-    ],
     continuous: 0,
     max: 0,
+    username: "",
   }),
 
-  mounted(){
-    this.$router.push("/login");
+  mounted() {
+    let logined = sessionStorage.getItem("logined");
+    if (!logined) {
+      this.$router.push("/login");
+    }
+    this.username = localStorage.getItem("account");
   },
 
   methods: {

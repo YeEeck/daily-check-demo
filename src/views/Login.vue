@@ -64,6 +64,7 @@ export default {
         } else {
           localStorage.setItem("account", this.account);
           localStorage.setItem("password", this.password);
+          sessionStorage.setItem("logined", true);
           this.$router.push("/");
         }
       });
