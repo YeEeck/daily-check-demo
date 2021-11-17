@@ -3,7 +3,10 @@
     <v-overlay :value="!init">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
-    <v-row justify="center" style="margin-top: 1rem">
+    <v-row
+      justify="center"
+      style="margin-left: 0; margin-right: 0; margin-top: 1rem"
+    >
       <v-col cols="11" lg="6">
         <v-card elevation="3" v-show="init">
           <v-row justify="center">
@@ -23,7 +26,14 @@
           </v-row>
           <v-row justify="center">
             <v-col cols="12" id="btn-col">
-              <v-btn color="#79A3B1" id="check-btn" fab dark @click="doing">
+              <v-btn
+                :loading="bigBtnLoading"
+                color="#424874"
+                id="check-btn"
+                fab
+                dark
+                @click="doing"
+              >
                 <v-icon
                   class="btn-img"
                   v-if="todayTimes < distTimes && nextTimeArrive"
@@ -43,9 +53,12 @@
             </v-col>
           </v-row>
           <v-row justify="center">
-            <v-col cols="auto" v-if="!todayChecked"> 今天还没有签到哦 </v-col>
-            <v-col cols="auto" v-if="todayChecked">
-              今天已签到 {{ todayTimes }} 次，上次签到是 {{ lastTime }} ，
+            <v-col class="text-center" cols="auto" v-if="!todayChecked">
+              今天还没有签到哦
+            </v-col>
+            <v-col class="text-center" cols="auto" v-if="todayChecked">
+              今天已签到 {{ todayTimes }} 次<br />
+              上次签到是 {{ lastTime }} <br />
               <span v-if="!nextTimeArrive">
                 距离下次签到时间还有 {{ nextTime }}。
               </span>
@@ -56,13 +69,16 @@
       </v-col>
     </v-row>
     <v-snackbar v-model="snackBar1" top>
-      {{ snackText1 }}
+      <div class="text-center">
+        {{ snackText1 }}
+      </div>
     </v-snackbar>
   </div>
 </template>
 
 <script>
 import { getTodayCheckData, setTodayCheckData } from "../network/checkData";
+import { setCoin } from "../network/user";
 export default {
   name: "Home",
   components: {},
@@ -82,10 +98,12 @@ export default {
     nextTimeArrive: true,
     distTimes: 2,
     init: false,
+    bigBtnLoading: false,
   }),
 
   mounted() {
-    let logined = sessionStorage.getItem("logined");
+    // let logined = sessionStorage.getItem("logined");
+    let logined = this.$store.state.logined;
     if (!logined) {
       this.$router.push("/login");
     } else {
@@ -96,7 +114,7 @@ export default {
     this.loopNextTime(then);
     setInterval(() => {
       this.loopNextTime(then);
-    }, 1000);
+    }, 500);
   },
 
   methods: {
@@ -116,10 +134,11 @@ export default {
           this.nextTimeArrive = false;
         }
         this.nextTime = hours + "小时" + minutes + "分" + seconds + "秒";
+        this.init = true;
       }
-      this.init = true;
     },
     doing() {
+      this.bigBtnLoading = true;
       if (this.todayTimes < this.distTimes) {
         if (this.nextTimeArrive == true) {
           let account = localStorage.getItem("account");
@@ -128,13 +147,24 @@ export default {
             date: this.today,
             times: this.todayTimes + 1,
           }).then(() => {
-            location.reload();
+            this.$store.commit("setCoin", this.$store.state.coin + 100);
+            let password = localStorage.getItem("password");
+            setCoin({
+              account: account,
+              password: password,
+              coin: this.$store.state.coin,
+            }).then(() => {
+              this.bigBtnLoading = false;
+              location.reload();
+            });
           });
         } else {
           this.showSnackBar1("还没有到下次签到的时间哦");
+          this.bigBtnLoading = false;
         }
       } else {
         this.showSnackBar1("今天已经完成签到了哦，明天再来吧");
+        this.bigBtnLoading = false;
       }
     },
     getTodayCheckData() {
@@ -150,6 +180,7 @@ export default {
       getTodayCheckData({ account: account, date: today }).then((res) => {
         if (res.data["nomatch"] == true) {
           this.todayChecked = false;
+          this.init = true;
         } else {
           this.todayChecked = true;
           this.todayTimes = res.data["check_times"];
@@ -193,5 +224,9 @@ export default {
 
 .top-margin-medium {
   margin-top: 1rem;
+}
+
+.sub-background-color {
+  background-color: #4f568f !important;
 }
 </style>

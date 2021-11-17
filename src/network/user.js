@@ -23,3 +23,16 @@ export function reg({ account, password }) {
         }
     })
 }
+
+export function setCoin({ account, password, coin }) {
+    return request({
+        url: "/user",
+        method: "POST",
+        data: {
+            type: 3,
+            account: account,
+            password: password,
+            coin: coin
+        }
+    })
+}

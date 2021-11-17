@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row justify="center">
+    <v-row justify="center" style="margin-left: 0; margin-right: 0">
       <v-col cols="11" lg="4">
         <v-scroll-x-transition>
           <v-card
@@ -37,11 +37,11 @@
               </v-col>
               <v-col cols="8">
                 <v-btn
-                  color="#204051"
+                  color="#424874"
                   dark
                   class="fill-all-width btn-white-text"
                   @click="login"
-                  :loading="btn2Loading"
+                  :loading="btn1Loading"
                   >登录</v-btn
                 >
               </v-col>
@@ -90,7 +90,7 @@
               </v-col>
               <v-col cols="8">
                 <v-btn
-                  color="#204051"
+                  color="#424874"
                   dark
                   class="fill-all-width btn-white-text"
                   @click="reg"
@@ -143,7 +143,9 @@ export default {
           } else {
             localStorage.setItem("account", this.account);
             localStorage.setItem("password", this.password);
-            sessionStorage.setItem("logined", true);
+            // sessionStorage.setItem("logined", true);
+            this.$store.commit("setCoin", Number(res.data.coin));
+            this.$store.commit("changeLogined", true);
             this.$router.push("/");
           }
           this.btn1Loading = false;
