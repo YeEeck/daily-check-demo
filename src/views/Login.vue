@@ -41,6 +41,7 @@
                   dark
                   class="fill-all-width btn-white-text"
                   @click="login"
+                  :loading="btn2Loading"
                   >登录</v-btn
                 >
               </v-col>
@@ -93,6 +94,7 @@
                   dark
                   class="fill-all-width btn-white-text"
                   @click="reg"
+                  :loading="btn2Loading"
                   >注册</v-btn
                 >
               </v-col>
@@ -119,6 +121,8 @@ export default {
     snackText1: "",
     showLoginPenal: true,
     showRegPenal: false,
+    btn1Loading: false,
+    btn2Loading: false,
   }),
   mounted() {
     let account = localStorage.getItem("account");
@@ -131,16 +135,23 @@ export default {
   },
   methods: {
     login() {
-      login({ account: this.account, password: this.password }).then((res) => {
-        if (res.data.success == "false") {
-          this.showSnackBar1("登录失败，账号或密码错误");
-        } else {
-          localStorage.setItem("account", this.account);
-          localStorage.setItem("password", this.password);
-          sessionStorage.setItem("logined", true);
-          this.$router.push("/");
-        }
-      });
+      this.btn1Loading = true;
+      login({ account: this.account, password: this.password })
+        .then((res) => {
+          if (res.data.success == "false") {
+            this.showSnackBar1("登录失败，账号或密码错误");
+          } else {
+            localStorage.setItem("account", this.account);
+            localStorage.setItem("password", this.password);
+            sessionStorage.setItem("logined", true);
+            this.$router.push("/");
+          }
+          this.btn1Loading = false;
+        })
+        .catch((error) => {
+          this.showSnackBar1("网络连接异常:" + error);
+          this.btn1Loading = false;
+        });
     },
     reg() {
       if (this.account == "") {
@@ -152,14 +163,21 @@ export default {
         return;
       }
       if (this.password == this.passwordCheck) {
-        reg({ account: this.account, password: this.password }).then((res) => {
-          if (res.data.success == "false") {
-            this.showSnackBar1("注册失败，该账号已存在");
-          } else {
-            this.showSnackBar1("注册成功");
-            this.changeShowPenal();
-          }
-        });
+        this.btn2Loading = true;
+        reg({ account: this.account, password: this.password })
+          .then((res) => {
+            if (res.data.success == "false") {
+              this.showSnackBar1("注册失败，该账号已存在");
+            } else {
+              this.showSnackBar1("注册成功");
+              this.changeShowPenal();
+            }
+            this.btn2Loading = false;
+          })
+          .catch((error) => {
+            this.btn2Loading = false;
+            this.showSnackBar1("网络连接异常:" + error);
+          });
       } else {
         this.showSnackBar1("两次输入的密码不一致");
       }
