@@ -1,10 +1,11 @@
 <template>
+  <!-- 主页面，开始时会跳转Login页面进行登录操作（包括自动登录） -->
   <div class="home">
     <!-- 页面遮罩，v-card加载时覆盖 -->
     <v-overlay :value="!init">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
-    <!-- margin-left与margin-right消除左右边距导致的页面大小超出出现滚动条 -->
+    <!-- margin-left与margin-right消除v-row产生的左右边距导致的页面大小超出出现滚动条 -->
     <v-row
       justify="center"
       style="margin-left: 0; margin-right: 0; margin-top: 1rem"
@@ -12,7 +13,16 @@
       <!-- 设置不同页面宽度不同 -->
       <v-col cols="11" lg="6">
         <!-- 文本未完全初始化时init为false，v-card不显示，此时上方的遮罩加载条出现 -->
-        <v-card elevation="3" v-show="init">
+        <v-card
+          elevation="3"
+          v-show="init"
+          style="
+            background: #f0ece3;
+            color: #112d4e;
+            font-size: large;
+            font-weight: bold;
+          "
+        >
           <v-row justify="center">
             <v-col
               ><div class="text-center top-margin-medium">
