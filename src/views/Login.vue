@@ -146,6 +146,8 @@ export default {
             // sessionStorage.setItem("logined", true);
             this.$store.commit("setCoin", Number(res.data.coin));
             this.$store.commit("changeLogined", true);
+            this.$store.commit("setDays", Number(res.data.checkDays))
+            this.$store.commit("setContinuity", Number(res.data.continuousCheck))
             this.$router.push("/");
           }
           this.btn1Loading = false;

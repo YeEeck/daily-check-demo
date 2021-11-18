@@ -18,10 +18,12 @@
           </v-row>
           <v-row justify="center" class="top-bar">
             <v-col cols="6">
-              <div class="text-center">已连续签到 {{ continuous }} 天</div>
+              <div class="text-center">
+                已连续签到 {{ this.$store.state.continuity }} 天
+              </div>
             </v-col>
             <v-col class="text-center" cols="6">
-              <div>已累计签到 {{ max }} 天</div>
+              <div>已累计签到 {{ this.$store.state.days }} 天</div>
             </v-col>
           </v-row>
           <v-row justify="center">
@@ -52,7 +54,7 @@
               </v-btn>
             </v-col>
           </v-row>
-          <v-row justify="center" v-if="!this.todayTimes == this.distTimes">
+          <v-row justify="center" v-if="!(this.todayTimes == this.distTimes)">
             <v-col class="text-center" cols="auto" v-if="!todayChecked">
               今天还没有签到哦
             </v-col>
@@ -87,15 +89,13 @@
 
 <script>
 import { getTodayCheckData, setTodayCheckData } from "../network/checkData";
-import { setCoin } from "../network/user";
+import { setCoin, addCheckDay } from "../network/user";
 export default {
   name: "Home",
   components: {},
   data: () => ({
     buttonIcon: true,
     today: "2019-01-08",
-    continuous: 0,
-    max: 0,
     username: "",
     todayTimes: 0,
     lastTime: "",
@@ -163,8 +163,18 @@ export default {
               password: password,
               coin: this.$store.state.coin,
             }).then(() => {
-              this.bigBtnLoading = false;
-              location.reload();
+              if (this.todayTimes + 1 == this.distTimes) {
+                let account = localStorage.getItem("account");
+                addCheckDay({ account: account, password: password }).then(
+                  () => {
+                    this.bigBtnLoading = false;
+                    location.reload();
+                  }
+                );
+              } else {
+                this.bigBtnLoading = false;
+                location.reload();
+              }
             });
           });
         } else {

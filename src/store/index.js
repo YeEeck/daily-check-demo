@@ -6,7 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     logined: false,
-    coin: 0
+    coin: 0,
+    days: 0,
+    continuity: 0
   },
   mutations: {
     changeLogined(state, bool) {
@@ -14,6 +16,12 @@ export default new Vuex.Store({
     },
     setCoin(state, coin) {
       state.coin = coin;
+    },
+    setDays(state, days) {
+      state.days = days;
+    },
+    setContinuity(state, continuity) {
+      state.continuity = continuity;
     }
   },
   actions: {

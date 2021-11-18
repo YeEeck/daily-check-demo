@@ -36,3 +36,15 @@ export function setCoin({ account, password, coin }) {
         }
     })
 }
+
+export function addCheckDay({ account, password }) {
+    return request({
+        url: "/user",
+        method: "POST",
+        data: {
+            type: 4,
+            account: account,
+            password: password
+        }
+    })
+}
