@@ -12,14 +12,14 @@
             <v-row>
               <v-col>
                 <v-text-field
-                  color="#79A3B1"
+                  :color="inputColor"
                   outlined
                   label="账户"
                   v-model="account"
                 ></v-text-field>
                 <v-text-field
                   type="password"
-                  color="#79A3B1"
+                  :color="inputColor"
                   outlined
                   label="密码"
                   v-model="password"
@@ -58,21 +58,21 @@
             <v-row>
               <v-col>
                 <v-text-field
-                  color="#79A3B1"
+                  :color="inputColor"
                   outlined
                   label="账户"
                   v-model="account"
                 ></v-text-field>
                 <v-text-field
                   type="password"
-                  color="#79A3B1"
+                  :color="inputColor"
                   outlined
                   label="密码"
                   v-model="password"
                 ></v-text-field>
                 <v-text-field
                   type="password"
-                  color="#79A3B1"
+                  :color="inputColor"
                   outlined
                   label="再次输入密码"
                   v-model="passwordCheck"
@@ -123,6 +123,7 @@ export default {
     showRegPenal: false,
     btn1Loading: false,
     btn2Loading: false,
+    inputColor: "#48466D",
   }),
   mounted() {
     let account = localStorage.getItem("account");
@@ -146,8 +147,11 @@ export default {
             // sessionStorage.setItem("logined", true);
             this.$store.commit("setCoin", Number(res.data.coin));
             this.$store.commit("changeLogined", true);
-            this.$store.commit("setDays", Number(res.data.checkDays))
-            this.$store.commit("setContinuity", Number(res.data.continuousCheck))
+            this.$store.commit("setDays", Number(res.data.checkDays));
+            this.$store.commit(
+              "setContinuity",
+              Number(res.data.continuousCheck)
+            );
             this.$router.push("/");
           }
           this.btn1Loading = false;
