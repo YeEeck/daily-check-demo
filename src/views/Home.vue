@@ -52,7 +52,7 @@
               </v-btn>
             </v-col>
           </v-row>
-          <v-row justify="center">
+          <v-row justify="center" v-if="!this.todayTimes == this.distTimes">
             <v-col class="text-center" cols="auto" v-if="!todayChecked">
               今天还没有签到哦
             </v-col>
@@ -63,6 +63,15 @@
                 距离下次签到时间还有 {{ nextTime }}。
               </span>
               <span v-if="nextTimeArrive"> 已经可以签到啦~ </span>
+            </v-col>
+          </v-row>
+          <v-row justify="center">
+            <v-col
+              class="text-center"
+              cols="auto"
+              v-if="this.todayTimes == this.distTimes"
+            >
+              今天的签到已经完成了哦~
             </v-col>
           </v-row>
         </v-card>
