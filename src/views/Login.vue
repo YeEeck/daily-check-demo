@@ -21,6 +21,7 @@
                   outlined
                   label="账户"
                   v-model="account"
+                  autocomplete="off"
                 ></v-text-field>
                 <v-text-field
                   type="password"
@@ -28,6 +29,7 @@
                   outlined
                   label="密码"
                   v-model="password"
+                  autocomplete="off"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -70,6 +72,7 @@
                   outlined
                   label="账户"
                   v-model="account"
+                  autocomplete="off"
                 ></v-text-field>
                 <v-text-field
                   type="password"
@@ -77,6 +80,7 @@
                   outlined
                   label="密码"
                   v-model="password"
+                  autocomplete="off"
                 ></v-text-field>
                 <v-text-field
                   type="password"
@@ -84,6 +88,7 @@
                   outlined
                   label="再次输入密码"
                   v-model="passwordCheck"
+                  autocomplete="off"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -138,9 +143,9 @@ export default {
   }),
   mounted() {
     // 页面加载后的触发事件
-    // 从localStorage中获取账号和密码
     this.account = "";
     this.password = "";
+    // 从localStorage中获取账号和密码
     let account = localStorage.getItem("account");
     let password = localStorage.getItem("password");
     // 如果两个参数都没有被定义的话说明当前用户没有登录，如果非空的话，则使用对应参数进行登录
