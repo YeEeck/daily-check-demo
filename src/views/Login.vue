@@ -21,7 +21,7 @@
                   outlined
                   label="账户"
                   v-model="account"
-                  autocomplete="off"
+                  AUTOCOMPLETE="OFF"
                 ></v-text-field>
                 <v-text-field
                   type="password"
@@ -29,7 +29,7 @@
                   outlined
                   label="密码"
                   v-model="password"
-                  autocomplete="off"
+                  AUTOCOMPLETE="OFF"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -72,7 +72,7 @@
                   outlined
                   label="账户"
                   v-model="account"
-                  autocomplete="off"
+                  AUTOCOMPLETE="OFF"
                 ></v-text-field>
                 <v-text-field
                   type="password"
@@ -80,7 +80,7 @@
                   outlined
                   label="密码"
                   v-model="password"
-                  autocomplete="off"
+                  AUTOCOMPLETE="OFF"
                 ></v-text-field>
                 <v-text-field
                   type="password"
@@ -88,7 +88,7 @@
                   outlined
                   label="再次输入密码"
                   v-model="passwordCheck"
-                  autocomplete="off"
+                  AUTOCOMPLETE="OFF"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -143,8 +143,6 @@ export default {
   }),
   mounted() {
     // 页面加载后的触发事件
-    this.account = "";
-    this.password = "";
     // 从localStorage中获取账号和密码
     let account = localStorage.getItem("account");
     let password = localStorage.getItem("password");
@@ -241,6 +239,9 @@ export default {
           then.showLoginPenal = true;
         }, 500);
       }
+      this.account = "";
+      this.password = "";
+      this.passwordCheck = "";
     },
     showSnackBar1(text) {
       this.snackText1 = text;
