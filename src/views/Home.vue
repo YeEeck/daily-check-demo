@@ -105,6 +105,19 @@
         {{ snackText1 }}
       </div>
     </v-snackbar>
+
+    <v-dialog v-model="dialog" max-width="290">
+      <v-card>
+        <v-card-title></v-card-title>
+        <v-card-text>签到完成，你获得 {{ gain }} 星芒。 </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="#424874" plain @click="dialog = false"> 好的 </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -129,7 +142,16 @@ export default {
     distTimes: 2,
     init: false,
     bigBtnLoading: false,
+    gain: 100,
+    dialog: false,
   }),
+  watch: {
+    dialog(val) {
+      if (val == false) {
+        location.reload();
+      }
+    },
+  },
 
   mounted() {
     // let logined = sessionStorage.getItem("logined");
@@ -209,13 +231,13 @@ export default {
                   () => {
                     // 结束签到按钮的加载并且刷新页面（重新获取各项数值）
                     this.bigBtnLoading = false;
-                    location.reload();
+                    this.dialog = true;
                   }
                 );
               } else {
                 // 结束签到按钮的加载并且刷新页面（重新获取各项数值）
                 this.bigBtnLoading = false;
-                location.reload();
+                this.dialog = true;
               }
             });
           });

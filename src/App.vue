@@ -72,6 +72,8 @@ export default {
         // sessionStorage.removeItem("logined");
         this.$store.commit("changeLogined", false);
         this.$router.push("/login");
+      } else if (id == 1) {
+        this.$router.push("/workplace");
       }
     },
   },
