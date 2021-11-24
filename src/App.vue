@@ -54,9 +54,10 @@ export default {
   data: () => ({
     open: false,
     items: [
-      { id: 1, icon: "handyman", title: "刻印工房" },
-      { id: 2, icon: "auto_awesome", title: "星台" },
-      { id: 3, icon: "logout", title: "退出登录" },
+      { id: 1, icon: "task_alt", title: "签到" },
+      { id: 2, icon: "handyman", title: "刻印工房" },
+      { id: 3, icon: "auto_awesome", title: "星台" },
+      { id: 4, icon: "logout", title: "退出登录" },
     ],
   }),
   computed: {
@@ -66,14 +67,16 @@ export default {
   },
   methods: {
     listClick(id) {
-      if (id == 3) {
+      if (id == 4) {
         localStorage.removeItem("account");
         localStorage.removeItem("password");
         // sessionStorage.removeItem("logined");
         this.$store.commit("changeLogined", false);
         this.$router.push("/login");
-      } else if (id == 1) {
+      } else if (id == 2) {
         this.$router.push("/workplace");
+      } else if (id == 1) {
+        this.$router.push("/");
       }
     },
   },
