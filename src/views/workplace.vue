@@ -29,6 +29,11 @@ export default {
     this.account = localStorage.getItem("account");
     this.password = localStorage.getItem("account");
   },
+  methods:{
+    create(){
+      
+    }
+  }
 };
 </script>
 
