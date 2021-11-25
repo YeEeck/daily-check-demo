@@ -144,6 +144,7 @@ export default {
     bigBtnLoading: false,
     gain: 100,
     dialog: false,
+    checkDateOffset: 14400000,
   }),
   watch: {
     dialog(val) {
@@ -155,6 +156,17 @@ export default {
 
   mounted() {
     // let logined = sessionStorage.getItem("logined");
+    let dateO = new Date();
+    // 为日期增加偏移量，默认凌晨四点才算是第二天
+    dateO = new Date(dateO.getTime() - this.checkDateOffset);
+    // 获取今天的日期
+    let today =
+      dateO.getFullYear() +
+      "-" +
+      (dateO.getMonth() + 1) +
+      "-" +
+      dateO.getDate();
+    this.today = today;
     // 在Login页面里会向store中的logined赋值
     let logined = this.$store.state.logined;
     if (!logined) {
@@ -252,17 +264,8 @@ export default {
     },
     getTodayCheckData() {
       let account = localStorage.getItem("account");
-      let dateO = new Date();
-      // 获取今天的日期
-      let today =
-        dateO.getFullYear() +
-        "-" +
-        (dateO.getMonth() + 1) +
-        "-" +
-        dateO.getDate();
-      this.today = today;
       // 调用封装好的网络模块，获取用户签到信息
-      getTodayCheckData({ account: account, date: today }).then((res) => {
+      getTodayCheckData({ account: account, date: this.today }).then((res) => {
         if (res.data["nomatch"] == true) {
           // 没有匹配的签到信息（新用户没签过到或今天没有进行过签到）
           this.nextTimeArrive = true; // 若今天没签过到则自然没有签到间隔限制，即可以立即签到
