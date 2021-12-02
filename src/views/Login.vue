@@ -142,6 +142,11 @@ export default {
     inputColor: "#48466D",
   }),
   mounted() {
+    //刷新页面用(android webview的BUG)，如果已经登录则直接跳转签到页面。
+    if (this.$store.state.logined == true) {
+      this.$router.push("/");
+    }
+
     // 页面加载后的触发事件
     // 从localStorage中获取账号和密码
     let account = localStorage.getItem("account");
