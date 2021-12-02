@@ -109,7 +109,7 @@
     <v-dialog v-model="dialog" max-width="290">
       <v-card>
         <v-card-title></v-card-title>
-        <v-card-text>签到完成，你获得 {{ gain }} 星芒。 </v-card-text>
+        <v-card-text>签到完成，你获得 {{ gain }} 星芒。2 </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -149,8 +149,9 @@ export default {
   watch: {
     dialog(val) {
       if (val == false) {
-        location.reload(true);
-        alert("");
+        // window.location.reload(true);
+        window.location.href = location.href + "?time=" + new Date().getTime();
+        alert("2");
       }
     },
   },
