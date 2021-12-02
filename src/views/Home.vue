@@ -150,6 +150,7 @@ export default {
     dialog(val) {
       if (val == false) {
         location.reload(true);
+        alert("");
       }
     },
   },
