@@ -149,7 +149,7 @@ export default {
   watch: {
     dialog(val) {
       if (val == false) {
-        location.reload();
+        location.reload(true);
       }
     },
   },
