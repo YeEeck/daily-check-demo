@@ -176,7 +176,7 @@ export default {
         level = 1;
       }
       let affectType = this.randomNum(1, 4);
-      let affect = this.randomNum(level * 5 * 100, level * 10 * 100) / 100;
+      let affect = this.randomNum(level * 3 * 100, level * 5 * 100) / 100;
       this.items[this.items.length] = {
         affectType: affectType,
         affect: affect,
