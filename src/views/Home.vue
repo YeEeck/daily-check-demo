@@ -41,37 +41,6 @@
               <div>已累计签到 {{ this.$store.state.days }} 天</div>
             </v-col>
           </v-row>
-          <v-row justify="center">
-            <v-col cols="12" id="btn-col">
-              <!-- 居中的大按钮 -->
-              <v-btn
-                :loading="bigBtnLoading"
-                color="#424874"
-                id="check-btn"
-                fab
-                dark
-                large
-                @click="doing"
-              >
-                <!-- 三个图标切换，todayTimes为今天签到的次数，distTimes为当前任务目标要签到的次数，nextTimeArrive为下次签到时间是否到达（两次签到时间需要大于间隔） -->
-                <v-icon
-                  class="btn-img"
-                  v-if="todayTimes < distTimes && nextTimeArrive"
-                  large
-                  >mdi-check-bold</v-icon
-                >
-                <v-icon class="btn-img" v-if="todayTimes == distTimes" large
-                  >mdi-check-decagram</v-icon
-                >
-                <span
-                  class="material-icons btn-img"
-                  v-if="!nextTimeArrive && todayTimes < distTimes"
-                >
-                  more_time
-                </span>
-              </v-btn>
-            </v-col>
-          </v-row>
           <!-- 如果今天签到次数已经大于目标签到次数，则直接不显示这些内容，转而显示下方的签到完成提示 -->
           <v-row justify="center" v-if="!(this.todayTimes == this.distTimes)">
             <v-col class="text-center" cols="auto" v-if="!todayChecked">
@@ -79,9 +48,10 @@
             </v-col>
             <v-col class="text-center" cols="auto" v-if="todayChecked">
               今天已签到 {{ todayTimes }} 次<br />
-              上次签到是 {{ lastTime }} <br />
+              上次签到是 {{ lastTime }} <br /><br />
               <span v-if="!nextTimeArrive">
-                距离下次签到时间还有 {{ nextTime }}。
+                距离下次签到时间还有<br />
+                {{ nextTime }}。
               </span>
               <span v-if="nextTimeArrive"> 已经可以签到啦~ </span>
             </v-col>
@@ -94,6 +64,37 @@
               v-if="this.todayTimes == this.distTimes"
             >
               今天的签到已经完成了哦~
+            </v-col>
+          </v-row>
+
+          <v-row justify="center">
+            <v-col cols="6" class="d-flex justify-center">
+              <v-btn
+                :loading="bigBtnLoading"
+                color="#424874"
+                rounded
+                dark
+                large
+                @click="doing"
+              >
+                <!-- 三个图标切换，todayTimes为今天签到的次数，distTimes为当前任务目标要签到的次数，nextTimeArrive为下次签到时间是否到达（两次签到时间需要大于间隔） -->
+                <div
+                  class="btn-text"
+                  v-if="todayTimes < distTimes && nextTimeArrive"
+                  large
+                >
+                  点击签到
+                </div>
+                <div class="btn-text" v-if="todayTimes == distTimes" large>
+                  签到已完成
+                </div>
+                <div
+                  class="btn-text"
+                  v-if="!nextTimeArrive && todayTimes < distTimes"
+                >
+                  签到冷却中
+                </div>
+              </v-btn>
             </v-col>
           </v-row>
         </v-card>
@@ -305,8 +306,8 @@ export default {
   width: 15rem !important;
   height: 15rem !important;
 }
-.btn-img {
-  font-size: 10rem !important;
+.btn-text {
+  font-size: 1rem !important;
 }
 .main {
   width: 100%;
