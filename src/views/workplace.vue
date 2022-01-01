@@ -277,6 +277,7 @@ export default {
           return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
         default:
           return 0;
+          
       }
     },
   },
